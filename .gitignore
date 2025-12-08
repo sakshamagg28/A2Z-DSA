@@ -1,0 +1,16 @@
+# Ignore output folder
+output/
+
+# Ignore VS Code settings folder
+.vscode/
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore compiled files
+*.o
+*.out
+*.exe
+
+# Ignore other temporary files (optional)
+*.log

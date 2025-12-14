@@ -1,9 +1,13 @@
-#include <iostream>
-#include <vector>
-using namespace std;
-
-int main(){
-    vector<int> v = {1,2,3,4,5,6,7,8,9};
-    cout << v[-2];
-    return 0;
-}
+class Solution {
+public:
+    void rotateArray(vector<int>& nums, int k) {
+        vector<int> copy = nums;
+        k = k % nums.size();
+        for (int i = 0; i < nums.size()-k; i++){
+            nums[i] = copy[(i+k) % nums.size()];
+        }
+        for (int i = nums.size()-k ; i < nums.size(); i++){
+            nums[i] = copy[i - (nums.size()-k)];
+        }
+    }
+};

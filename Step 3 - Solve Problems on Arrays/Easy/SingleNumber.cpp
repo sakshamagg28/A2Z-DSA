@@ -9,10 +9,10 @@ public:
         int maxElement = *max_element(nums.begin(), nums.end());
         vector<int> count(maxElement + 1, 0);
 
-        for (int i = 0; i < nums.size(); i++){
+        for (int i = 0; i < (int)nums.size(); i++){
             count[nums[i]]++;
         }
-        for (int j = 0; j < count.size(); j++){
+        for (int j = 0; j < (int)count.size(); j++){
             if (count[j] == 1){
                 return j;
                 break;

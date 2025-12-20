@@ -8,7 +8,7 @@ public:
         int maxSum = INT_MIN, sum = 0;
         int startCurrent= -1, startMax = -1, endMax = -1;
 
-        for (int i = 0; i < nums.size(); i++){
+        for (int i = 0; i < (int)nums.size(); i++){
             if (sum == 0){
                 startCurrent = i;
             }

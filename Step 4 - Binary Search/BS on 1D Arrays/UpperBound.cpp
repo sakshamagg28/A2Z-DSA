@@ -1,15 +1,13 @@
 class Solution{
 public:
-    int lowerBound(vector<int> &nums, int x){
+    int upperBound(vector<int> &nums, int x){
         int low = 0, mid, high = nums.size()-1;
-        
+        int count = 0;
+
         while (low <= high){
             mid = (low + high)/2;
 
-            if (nums[mid] == x){
-                return mid;
-            }
-            else if (nums[mid] < x){
+            if (nums[mid] <= x){
                 low = mid + 1;
             }
             else if (nums[mid] > x){

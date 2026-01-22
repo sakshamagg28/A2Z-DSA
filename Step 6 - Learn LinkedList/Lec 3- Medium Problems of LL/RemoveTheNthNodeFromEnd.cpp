@@ -1,5 +1,7 @@
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
+
+define NULL = nullptr
 
 // Class representing a node in the linked list
 class Node {

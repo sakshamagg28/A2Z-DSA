@@ -7,11 +7,9 @@ public:
             while(!st.empty() && st.top() <= nums[i % nums.size()]){
                 st.pop();
             }
-            if (st.empty()) {
-                result[i % nums.size()] = -1;
-            }
-            else {
-                result[i % nums.size()] = st.top();
+            if (i < nums.size()){
+                if (st.empty()) result[i % nums.size()] = -1;
+                else result[i % nums.size()] = st.top();
             }
             st.push(nums[i % nums.size()]);
         }

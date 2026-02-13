@@ -31,33 +31,65 @@
 
 
 
-// ITERATIVE using 1 stack
+// // ITERATIVE USING 1 STACK
+// class Solution {
+// public:
+//     vector<int> postorderTraversal(TreeNode* root) {
+//         vector<int> postorder;
+//         if (!root) return postorder;
+
+//         stack<TreeNode*> st;
+//         TreeNode* node = root;
+//         TreeNode* lastVisited = nullptr;
+
+//         while(node != nullptr || !st.empty()){
+//             if (node != nullptr){
+//                 st.push(node);
+//                 node = node->left;
+//             }
+//             else{
+//                 if (st.top()->right != nullptr && lastVisited != st.top()->right) {
+//                     node = st.top()->right;
+//                 }
+//                 else{
+//                     postorder.push_back(st.top()->val);
+//                     lastVisited = st.top();
+//                     st.pop();
+//                 }
+//             }
+//         }
+//         return postorder;
+//     }
+// };
+
+
+
+
+// ITERATIVE USING 2 STACKS
 class Solution {
 public:
     vector<int> postorderTraversal(TreeNode* root) {
         vector<int> postorder;
         if (!root) return postorder;
 
-        stack<TreeNode*> st;
-        TreeNode* node = root;
-        TreeNode* lastVisited = nullptr;
+        stack<TreeNode*> st1, st2;
+        st1.push(root);
 
-        while(node != nullptr || !st.empty()){
-            if (node != nullptr){
-                st.push(node);
-                node = node->left;
-            }
-            else{
-                if (st.top()->right != nullptr && lastVisited != st.top()->right) {
-                    node = st.top()->right;
-                }
-                else{
-                    postorder.push_back(st.top()->val);
-                    lastVisited = st.top();
-                    st.pop();
-                }
-            }
+        while(!st1.empty()){
+            root = st1.top();
+            st1.pop();
+
+            st2.push(root);
+
+            if(root->left) st1.push(root->left);
+            if(root->right) st1.push(root->right);
         }
+
+        while(!st2.empty()){
+            postorder.push_back(st2.top()->val);
+            st2.pop();
+        }
+        
         return postorder;
     }
 };

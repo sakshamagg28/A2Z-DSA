@@ -1,36 +1,6 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <unordered_map>
 using namespace std;
-
-void isPalindrome(string s, int n, int k){
-    if (n - k == 1){
-        cout << "YES" << endl;
-        return;
-    }
-    int count = 0;
-    for (int i = 0; i < n; i++) {
-        if (s[i] != s[n-i-1]){
-            if (s[i] == s[n-i-2]){
-                s.erase(n-i-1);
-                count++;
-            }
-            // else if (s[i+1] == s[n-i-1]){
-            //     s.erase(i);
-            //     count++;
-            // }
-            else{
-                s.erase(i);
-                s.erase(n-i-1);
-                count += 2;
-            }
-        }
-
-        if (count >= k){
-            cout << "NO" << endl;
-        }
-    }
-
-    if (count >= k) cout << "NO" << endl;
-}
 
 int main(){
     int t;
@@ -40,7 +10,27 @@ int main(){
         cin >> n >> k;
         string s;
         cin >> s;
-        isPalindrome(s, n, k);
+
+        unordered_map<char, int> freq;
+        int extraCount = 0;
+
+        for (char c : s){
+            freq[c]++;
+        }
+        for (auto&p : freq){
+            if (p.second % 2 != 0){
+                extraCount++;
+            }
+        }
+        if (k <= extraCount && extraCount-k <= 1){
+            cout << "YES\n";
+        }
+        else if (k > extraCount){
+            cout << "YES\n";
+        }
+        else{
+            cout << "NO\n";
+        }
     }
     return 0;
 }

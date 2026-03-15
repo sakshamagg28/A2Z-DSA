@@ -37,6 +37,7 @@ int main(){
                     win_pos--;
                 }
                 else{
+                    if (sum + win_value > m) break;
                     sum += win_value;
                     ans++;
                     auto it = find(a.begin(), a.begin()+k, win_value);

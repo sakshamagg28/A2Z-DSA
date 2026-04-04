@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <climits>
 
 using namespace std;
 
@@ -9,7 +10,7 @@ int main() {
     while (t--) {
         vector<int> a(7);
 
-        int maxVal = 0;
+        int maxVal = INT_MIN;
         bool ok = false;
         for (int i = 0; i < 7; i++) {
             cin >> a[i];

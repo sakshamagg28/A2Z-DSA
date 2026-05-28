@@ -3,7 +3,7 @@ public:
     int solve(vector<int>& nums, int start, int end){
         int prev2 = 0;
         int prev1 = 0;
-        int curr;
+        int curr = prev1;
 
         for (int i = start; i <= end; i++){
             curr = max(prev1, nums[i] + prev2);

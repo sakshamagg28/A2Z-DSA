@@ -6,18 +6,24 @@ public:
 
         for (int i = 0; i < V-1; i++){
             for (auto& e : edges){
-                if (dist[e[0]] + e[2] < dist[e[1]]){
-                    dist[e[1]] = dist[e[0]] + e[2];
+                int u = e[0];
+                int v = e[1];
+                int wt = e[2];
+                if (dist[u] != 1e9 && dist[u] + wt < dist[v]){
+                    dist[v] = dist[u] + wt;
                 }
             }
         }
 
         for (auto& e : edges){
-            if (dist[e[0]] + e[2] < dist[e[1]]){
+            int u = e[0];
+            int v = e[1];
+            int wt = e[2];
+            if (dist[u] != 1e9 && dist[u] + wt < dist[v]){
                 return {-1};
             }
         }
-
+        
         return dist;
 	}
 };

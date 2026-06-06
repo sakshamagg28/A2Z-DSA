@@ -66,7 +66,7 @@ public:
 
         int cntComp = 0;
         for (int node : stoneNodes){
-            if (dsu.parent[node] == node) cntComp++;
+            if (dsu.findUPar(node) == node) cntComp++;
         }
 
         return n - cntComp;

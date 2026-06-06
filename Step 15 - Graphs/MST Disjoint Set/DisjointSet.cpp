@@ -18,14 +18,6 @@ public:
         return parent[node] = findUPar(parent[node]);
     }
 
-    bool find(int u, int v) {
-        int uPar_u = findUPar(u);
-        int uPar_v = findUPar(v);
-
-        if (uPar_u == uPar_v) return true;
-        else return false;
-    }
-
     void unionBySize(int u, int v) {
         int uPar_u = findUPar(u);
         int uPar_v = findUPar(v);

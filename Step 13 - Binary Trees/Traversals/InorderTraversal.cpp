@@ -13,22 +13,22 @@
 
 
 // // RECURSIVE
-// class Solution {
-// public:
-//     vector<int> inorderTraversal(TreeNode* root) {
-//         vector<int> result = {};
-//         inorder(root, result);
-//         return result;
-//     }
+class Solution {
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+        vector<int> result = {};
+        inorder(root, result);
+        return result;
+    }
 
-//     void inorder(TreeNode* root, vector<int>& result){
-//         if (root == nullptr) return;
+    void inorder(TreeNode* root, vector<int>& result){
+        if (root == nullptr) return;
 
-//         inorder(root->left, result);
-//         result.push_back(root->val);
-//         inorder(root->right, result);
-//     }
-// };
+        inorder(root->left, result);
+        result.push_back(root->val);
+        inorder(root->right, result);
+    }
+};
 
 
 
@@ -50,11 +50,41 @@ public:
             else{
                 if (st.empty()) break;
                 node = st.top();
-                inorder.push_back(st.top()->val);
                 st.pop();
+                inorder.push_back(node->val);
                 node = node->right;
             }
         }
         return inorder;
     }
 };
+
+
+
+// ITERATIVE Another way (cleaner)
+class Solution {
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+        if (!root) return {};
+
+        vector<int> ans;
+        stack<TreeNode*> st;
+        TreeNode* curr = root;
+
+        while (curr || !st.empty()){
+            while (curr){
+                st.push(curr);
+                curr = curr->left;
+            }
+
+            curr = st.top();
+            st.pop();
+
+            ans.push_back(curr->val);
+
+            curr = curr->right;
+        }
+        
+        return ans;
+    }
+};  

@@ -12,25 +12,25 @@
 
 
 
-// class Solution {
-// public:
-//     bool isBalanced(TreeNode* root) {
-//         if (!root) return true;
+class Solution {
+public:
+    bool isBalanced(TreeNode* root) {
+        if (!root) return true;
 
-//         int heightLeft = heightOfTree(root->left);
-//         int heightRight = heightOfTree(root->right);
+        int heightLeft = heightOfTree(root->left);
+        int heightRight = heightOfTree(root->right);
 
-//         if (abs(heightLeft - heightRight) > 1) return false;
+        if (abs(heightLeft - heightRight) > 1) return false;
 
-//         return isBalanced(root->left) && isBalanced(root->right);
-//     }
+        return isBalanced(root->left) && isBalanced(root->right);
+    }
 
-//     int heightOfTree(TreeNode* root){
-//         if (!root) return 0;
+    int heightOfTree(TreeNode* root){
+        if (!root) return 0;
 
-//         return 1 + max(heightOfTree(root->left), heightOfTree(root->right));
-//     }
-// };
+        return 1 + max(heightOfTree(root->left), heightOfTree(root->right));
+    }
+};
 
 
 

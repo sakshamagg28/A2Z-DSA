@@ -1,40 +1,176 @@
-class Solution{   
+//==============================================================//
+// Method 1 : Recursion
+// State : f(idx,target)
+// Time Complexity : O(2^N)
+// Space Complexity : O(N)
+//==============================================================//
+
+class Solution {
 public:
-    bool isSubsetSum(vector<int>arr, int target){
-        vector<int> dp(target+1, false);
+    bool f(int idx, int target, vector<int>& arr) {
+        if (target == 0)
+            return true;
+
+        if (idx == 0)
+            return arr[0] == target;
+
+        bool notTake = f(idx - 1, target, arr);
+
+        bool take = false;
+        if (arr[idx] <= target)
+            take = f(idx - 1, target - arr[idx], arr);
+
+        return take || notTake;
+    }
+
+    bool isSubsetSum(vector<int>& arr, int target) {
+        int n = arr.size();
+        return f(n - 1, target, arr);
+    }
+};
+
+//==============================================================//
+// Method 2 : Memoization
+// State : dp[idx][target]
+// Time Complexity : O(N*Target)
+// Space Complexity : O(N*Target)
+//==============================================================//
+
+class Solution {
+public:
+    bool f(int idx, int target, vector<int>& arr, vector<vector<int>>& dp) {
+        if (target == 0)
+            return true;
+
+        if (idx == 0)
+            return arr[0] == target;
+
+        if (dp[idx][target] != -1)
+            return dp[idx][target];
+
+        bool notTake = f(idx - 1, target, arr, dp);
+
+        bool take = false;
+        if (arr[idx] <= target)
+            take = f(idx - 1, target - arr[idx], arr, dp);
+
+        return dp[idx][target] = take || notTake;
+    }
+
+    bool isSubsetSum(vector<int>& arr, int target) {
+        int n = arr.size();
+
+        vector<vector<int>> dp(n, vector<int>(target + 1, -1));
+
+        return f(n - 1, target, arr, dp);
+    }
+};
+
+//==============================================================//
+// Method 3 : Tabulation
+// State : dp[idx][target]
+// Time Complexity : O(N*Target)
+// Space Complexity : O(N*Target)
+//==============================================================//
+
+class Solution {
+public:
+    bool isSubsetSum(vector<int>& arr, int target) {
+        int n = arr.size();
+
+        vector<vector<bool>> dp(n, vector<bool>(target + 1, false));
+
+        for (int i = 0; i < n; i++)
+            dp[i][0] = true;
+
+        if (arr[0] <= target)
+            dp[0][arr[0]] = true;
+
+        for (int idx = 1; idx < n; idx++) {
+            for (int sum = 1; sum <= target; sum++) {
+
+                bool notTake = dp[idx - 1][sum];
+
+                bool take = false;
+                if (arr[idx] <= sum)
+                    take = dp[idx - 1][sum - arr[idx]];
+
+                dp[idx][sum] = take || notTake;
+            }
+        }
+
+        return dp[n - 1][target];
+    }
+};
+
+//==============================================================//
+// Method 4 : Space Optimized
+// State : prev[target]
+// Time Complexity : O(N*Target)
+// Space Complexity : O(Target)
+//==============================================================//
+
+class Solution {
+public:
+    bool isSubsetSum(vector<int>& arr, int target) {
+        int n = arr.size();
+
+        vector<bool> prev(target + 1, false);
+
+        prev[0] = true;
+
+        if (arr[0] <= target)
+            prev[arr[0]] = true;
+
+        for (int idx = 1; idx < n; idx++) {
+
+            vector<bool> curr(target + 1, false);
+
+            curr[0] = true;
+
+            for (int sum = 1; sum <= target; sum++) {
+
+                bool notTake = prev[sum];
+
+                bool take = false;
+                if (arr[idx] <= sum)
+                    take = prev[sum - arr[idx]];
+
+                curr[sum] = take || notTake;
+            }
+
+            prev = curr;
+        }
+
+        return prev[target];
+    }
+};
+
+//==============================================================//
+// Method 5 : Single Array Space Optimization
+// State : dp[target]
+// Time Complexity : O(N*Target)
+// Space Complexity : O(Target)
+//==============================================================//
+
+class Solution {
+public:
+    bool isSubsetSum(vector<int>& arr, int target) {
+        int n = arr.size();
+
+        vector<bool> dp(target + 1, false);
+
         dp[0] = true;
 
-        for (int num : arr){
-            for (int j = target; j >= num; j--){
-                dp[j] = dp[j] || dp[j-num];
+        if (arr[0] <= target)
+            dp[arr[0]] = true;
+
+        for (int idx = 1; idx < n; idx++) {
+            for (int sum = target; sum >= arr[idx]; sum--) {
+                dp[sum] = dp[sum] || dp[sum - arr[idx]];
             }
         }
 
         return dp[target];
-    }
-};  
-
-
-
-// Tabulation
-class Solution{   
-public:
-    bool isSubsetSum(vector<int>arr, int target){
-        int n = arr.size();
-        vector<vector<bool>> dp(n, vector<bool>(target + 1, 0));
-
-        for(int i = 0; i < n; i++) dp[i][0] = true;
-        dp[0][arr[0]] = true;
-
-        for (int i = 1; i < n; i++){
-            for (int j = 1; j <= target; j++){
-                bool notTake = dp[i - 1][j];
-                bool take = false;
-                if (arr[i] <= j) take = dp[i-1][j - arr[i]];
-                dp[i][j] = take | notTake;
-            }
-        }
-
-        return dp[n-1][target];
     }
 };

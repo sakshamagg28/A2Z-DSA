@@ -1,12 +1,14 @@
-// Method : DP + Parent Array 
-// State : dp[i] = LIS ending at i 
-// Time : O(N²) 
+// Method : DP + Parent Array
+// State : dp[i] = Largest Divisible Subset ending at i
+// Time : O(N²)
 // Space : O(N)
 
 class Solution {
 public:
-    vector<int> longestIncreasingSubsequence(vector<int>& arr) {
-        int n = arr.size();
+    vector<int> largestDivisibleSubset(vector<int>& nums) {
+        int n = nums.size();
+
+        sort(nums.begin(), nums.end());
 
         vector<int> dp(n, 1);
         vector<int> parent(n);
@@ -18,29 +20,29 @@ public:
             parent[i] = i;
 
             for (int prev = 0; prev < i; prev++){
-                if (arr[prev] < arr[i] && dp[prev] + 1 > dp[i]){
+                if (nums[i] % nums[prev] == 0 && dp[prev] + 1 > dp[i]){
                     dp[i] = dp[prev] + 1;
                     parent[i] = prev;
                 }
             }
-            
+
             if (dp[i] > maxi){
                 maxi = dp[i];
                 lastIdx = i;
             }
         }
 
-        vector<int> lis;
+        vector<int> ans;
 
         while (parent[lastIdx] != lastIdx){
-            lis.push_back(arr[lastIdx]);
+            ans.push_back(nums[lastIdx]);
             lastIdx = parent[lastIdx];
         }
 
-        lis.push_back(arr[lastIdx]);
+        ans.push_back(nums[lastIdx]);
 
-        reverse(lis.begin(), lis.end());
+        reverse(ans.begin(), ans.end());
 
-        return lis;
+        return ans;
     }
 };
